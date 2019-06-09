@@ -6,7 +6,6 @@ Hay tests mostrando el funcionamiento del parser hasta el momento, pero un ejemp
 
 ```scala
 > new MusicParser("A B C D E F").parse()
-
 #=> List(A, B, C, D, E, F)
 ```
 
