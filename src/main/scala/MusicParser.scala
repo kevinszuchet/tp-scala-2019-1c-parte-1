@@ -30,15 +30,13 @@ class MusicParser(input: String) {
       next = parseChar()
       if (next != '(') throw new NotAValidPatronException(next)
 
-      println("Entro al patron")
+      println("Entro al patron", patronParser)
       patronParser.searchPatron(this)
-      return List.empty
+      return patronParser.parse()
     }
 
     if (next == ')') {
-      val notas = patronParser.parse()
-      println("Devuelve el control al music parser", notas)
-      return notas
+      return List.empty
     }
 
     List[Nota](Nota.notas.find(_.toString == next.toString()).getOrElse(throw new NotANoteException(next)))
@@ -50,6 +48,7 @@ class MusicParser(input: String) {
       val notas: List[Nota] = parseNote()
       println("Las notas", notas)
       result = result ::: notas
+      println("El resultado", result)
     }
     catch {
       case _: EOIParserException =>
@@ -58,7 +57,7 @@ class MusicParser(input: String) {
   }
 }
 
-class PatronParser(repeticiones: Int = 1) {
+class PatronParser(repeticiones: Int) {
   protected var patron: List[Nota] = List[Nota]()
 
   def searchPatron(musicParser: MusicParser): Unit = {
@@ -68,7 +67,7 @@ class PatronParser(repeticiones: Int = 1) {
 
   def parse(): List[Nota] = {
     println("Sale del patron", patron)
-    val patronRepetido: List[Nota] = List.fill(repeticiones)(patron.toList).flatten
+    val patronRepetido: List[Nota] = List.fill(repeticiones)(patron).flatten
     patron = List[Nota]()
     return patronRepetido
   }
