@@ -36,7 +36,7 @@ class MusicParser(input: String) {
     }
 
     if (next == ')') {
-      return List.empty
+      throw new EndOfPatronException()
     }
 
     List[Nota](Nota.notas.find(_.toString == next.toString()).getOrElse(throw new NotANoteException(next)))
@@ -52,6 +52,7 @@ class MusicParser(input: String) {
     }
     catch {
       case _: EOIParserException =>
+      case _: EndOfPatronException =>
     }
     return result
   }
@@ -77,3 +78,4 @@ class ParserException(reason: String) extends Exception(reason)
 class EOIParserException extends ParserException("reached end of input")
 class NotANoteException(val read: Char) extends ParserException(s"Expected [A|B|C|D|E|F|G] but got $read")
 class NotAValidPatronException(val read: Char) extends ParserException(s"Expected NUMx([A|B|C|D|E|F|G]+) but got $read")
+class EndOfPatronException() extends ParserException("End of the Patron")
