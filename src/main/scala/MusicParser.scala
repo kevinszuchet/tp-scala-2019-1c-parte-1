@@ -1,6 +1,5 @@
 import java.io.{PushbackReader, StringReader}
 import Musica._
-import scala.collection.mutable.ListBuffer
 
 case class Note(name: String)
 
@@ -17,18 +16,18 @@ class MusicParser(input: String) {
     do next = parseChar() while (next == ' ')
 
     if (next.isDigit) {
-      var repeticiones: Int = 0
+      var times: Int = 0
       do {
-        repeticiones = (repeticiones * 10) + next.asDigit
+        times = (times * 10) + next.asDigit
         next = parseChar()
-        if (!next.isDigit && next != 'x') throw new NotAValidPatronException(next)
+        if (!next.isDigit && next != 'x') throw new NotAValidPatternException(next)
       } while (next.toLower != 'x')
 
       next = parseChar()
-      if (next != '(') throw new NotAValidPatronException(next)
+      if (next != '(') throw new NotAValidPatternException(next)
 
       val pattern = this.parse()
-      return List.fill(repeticiones)(pattern).flatten
+      return List.fill(times)(pattern).flatten
     }
 
     if (next == ')') {
@@ -54,4 +53,4 @@ class MusicParser(input: String) {
 class ParserException(reason: String) extends Exception(reason)
 class EOIParserException extends ParserException("reached end of input")
 class NotANoteException(val read: Char) extends ParserException(s"Expected [A|B|C|D|E|F|G] but got $read")
-class NotAValidPatronException(val read: Char) extends ParserException(s"Expected NUMx([A|B|C|D|E|F|G]+) but got $read")
+class NotAValidPatternException(val read: Char) extends ParserException(s"Expected NUMx([A|B|C|D|E|F|G]+) but got $read")
