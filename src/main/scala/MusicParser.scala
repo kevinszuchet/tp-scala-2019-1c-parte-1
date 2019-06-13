@@ -6,7 +6,6 @@ case class Note(name: String)
 
 class MusicParser(input: String) {
   protected val inputStream = new PushbackReader(new StringReader(input))
-  private var patronParser: PatronParser = null
 
   protected def parseChar(): Char = {
     val parsed = inputStream.read()
@@ -25,17 +24,15 @@ class MusicParser(input: String) {
         if (!next.isDigit && next != 'x') throw new NotAValidPatronException(next)
       } while (next.toLower != 'x')
 
-      patronParser = new PatronParser(repeticiones)
-
       next = parseChar()
       if (next != '(') throw new NotAValidPatronException(next)
 
-      val currentPatron = patronParser.searchPatron(this)
-      return currentPatron.parse()
+      val pattern = this.parse()
+      return List.fill(repeticiones)(pattern).flatten
     }
 
     if (next == ')') {
-      throw new EndOfPatronException()
+      throw new EOIParserException()
     }
 
     List[Nota](Nota.notas.find(_.toString == next.toString()).getOrElse(throw new NotANoteException(next)))
@@ -49,23 +46,8 @@ class MusicParser(input: String) {
     }
     catch {
       case _: EOIParserException =>
-      case _: EndOfPatronException =>
     }
     return result
-  }
-}
-
-class PatronParser(repeticiones: Int) {
-  protected var patron: List[Nota] = List[Nota]()
-
-  def searchPatron(musicParser: MusicParser): PatronParser = {
-    patron = patron ::: musicParser.parse()
-    return this
-  }
-
-  def parse(): List[Nota] = {
-    val patronRepetido: List[Nota] = List.fill(repeticiones)(patron).flatten
-    return patronRepetido
   }
 }
 
@@ -73,4 +55,3 @@ class ParserException(reason: String) extends Exception(reason)
 class EOIParserException extends ParserException("reached end of input")
 class NotANoteException(val read: Char) extends ParserException(s"Expected [A|B|C|D|E|F|G] but got $read")
 class NotAValidPatronException(val read: Char) extends ParserException(s"Expected NUMx([A|B|C|D|E|F|G]+) but got $read")
-class EndOfPatronException() extends ParserException("End of the Patron")

@@ -65,7 +65,6 @@ class MusicParserTest extends FreeSpec with Matchers {
       }
       "Poniendo un inception de multiplicadores" - {
         "Parsea bien el inception del multiplicadores" in {
-          println("test", new MusicParser("2x(A B 3x(F G 2x(A))) F B E").parse())
           assertParsesSucceededWithResult(new MusicParser("2x(A B 3x(F G 2x(A))) F B E").parse(),
             List(A, B, F, G, A, A, F, G, A, A, F, G, A, A, A, B, F, G, A, A, F, G, A, A, F, G, A, A, F, B, E))
         }
