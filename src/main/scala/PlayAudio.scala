@@ -1,7 +1,5 @@
 object PlayAudio extends App {
-  //val sariaSong = "F A 2x(C D 2x(C D E)) B B"
-  val sariaSong = "F A 2x(C D 3x(G E)) B B"
-  // val sariaSong = "F A B B F A B B F A B E D D B C B G E E D D E G E F A B B F A B B F A B E D D B C E B G G D E G E"
+  val synfonicDeMusicaLigera = "20x(4x(B) 5x(G) 4x(D) 8x(A))"
 
-  AudioPlayer.reproducir(sariaSong)
+  AudioPlayer.reproducir(synfonicDeMusicaLigera)
 }
