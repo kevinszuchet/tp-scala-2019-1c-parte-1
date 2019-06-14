@@ -11,7 +11,7 @@ class MusicParser(input: String) {
     if (parsed == -1) throw new EOIParserException
     return parsed.toChar
   }
-  protected def parseNote(): List[Nota] = {
+  protected def parseNote(): Melodia = {
     var next: Char = ' '
     do next = parseChar() while (next == ' ')
 
@@ -37,10 +37,10 @@ class MusicParser(input: String) {
     List[Nota](Nota.notas.find(_.toString == next.toString()).getOrElse(throw new NotANoteException(next)))
   }
 
-  def parse(): List[Nota] = {
-    var result: List[Nota] = List()
+  def parse(): Melodia = {
+    var result: Melodia = List()
     try while (true) {
-      val notas: List[Nota] = parseNote()
+      val notas: Melodia = parseNote()
       result = result ::: notas
     }
     catch {
