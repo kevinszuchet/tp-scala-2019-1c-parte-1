@@ -16,7 +16,7 @@ package object Musica {
     def acordeMayor(octava: Int, figura: Figura): Acorde =
       Acorde((this :: this + 4 :: this + 7 :: Nil).map(Tono(octava, _)), figura)
 
-    def +(cantidadDeSemitonos: Int) = (1.to(cantidadDeSemitonos)).foldLeft(this) {
+    def +(cantidadDeSemitonos: Int): Nota = (1.to(cantidadDeSemitonos)).foldLeft(this) {
       case (nota, _) ⇒ nota.sostenido
     }
   }
@@ -34,24 +34,12 @@ package object Musica {
   case object As extends Nota
   case object B extends Nota
 
-  abstract class Figura {
-    val duracion: Int
-  }
-  case object Redonda extends Figura {
-    val duracion = 1500
-  }
-  case object Blanca extends Figura {
-    val duracion = Redonda.duracion / 2
-  }
-  case object Negra extends Figura {
-    val duracion = Blanca.duracion / 2
-  }
-  case object Corchea extends Figura {
-    val duracion = Negra.duracion / 2
-  }
-  case object SemiCorchea extends Figura {
-    val duracion = Corchea.duracion / 2
-  }
+  abstract class Figura(val duracion: Int)
+  case object Redonda extends Figura(1500)
+  case object Blanca extends Figura(Redonda.duracion / 2)
+  case object Negra extends Figura(Blanca.duracion / 2)
+  case object Corchea extends Figura(Negra.duracion / 2)
+  case object SemiCorchea extends Figura(Corchea.duracion / 2)
 
   case class Tono(octava: Int, nota: Nota)
 
