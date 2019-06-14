@@ -6,7 +6,7 @@ object AudioPlayer {
   require(VOLUME <= 127)
   require(VOLUME >= 0)
 
-  def reproducir(notas: List[Nota]): Unit = {
+  def reproducirNotas(notas: List[Nota]): Unit = {
     val melodia = notas.map(nota ⇒ Sonido(Tono(6, nota), Negra))
 
     reproducir(melodia)

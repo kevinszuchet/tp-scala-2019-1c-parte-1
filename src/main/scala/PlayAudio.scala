@@ -3,5 +3,5 @@ object PlayAudio extends App {
 
 //  Ahora convertir la partitura a la melodía y pasarle eso al AudioPlayer les toca hacerlo a ustedes.
 
-//  AudioPlayer.reproducir(sariaSong)
+//  AudioPlayer.reproducirNotas(sariaSong)
 }
