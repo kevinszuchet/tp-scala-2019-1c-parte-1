@@ -43,4 +43,4 @@ Importante, el patrón podría anidarse las veces que se quiera.
 
 # Parte II
 
-//TODO: Link al enunciado
+[Enunciado](https://docs.google.com/document/d/1TOblM1E5MtVB-tBrp6f5zVvufnK4Lcr2f71-jGkTAEA/edit#)
